@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #060608;
+}
+
+body {
+  font-family: "Manrope", system-ui, sans-serif;
+  color: #f4f4f6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Lenis recommended html state */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Dark vignette base behind the fixed canvas */
+#bg-base {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 80% 8%, rgba(214, 188, 130, 0.06), transparent 55%),
+    radial-gradient(120% 110% at 12% 92%, rgba(127, 216, 208, 0.05), transparent 55%),
+    #060608;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #060608;
+}
+::-webkit-scrollbar-thumb {
+  background: #26262e;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #34343e;
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: rgba(214, 188, 130, 0.28);
+  color: #fff;
+}
+
+@layer utilities {
+  .glass {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.015)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+  .glass-strong {
+    background: rgba(11, 11, 15, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+  .text-gradient {
+    background: linear-gradient(180deg, #ffffff 0%, #c9c9d2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-gradient-amber {
+    background: linear-gradient(120deg, #e7d6ac 0%, #d6bc82 45%, #b8995a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .grid-faint {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .stroke-text {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+    color: transparent;
+  }
+  .edge-fade-x {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+}
+
+/* ---------- Accessibility: reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   PROJECT MINI-VISUALS (per-card animated SVG headers)
+   ============================================================ */
+@keyframes pv-dot { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+@keyframes pv-belt { from { transform: translateX(0); } to { transform: translateX(-100px); } }
+@keyframes pv-spin { to { transform: rotate(360deg); } }
+@keyframes pv-pulse { 0%, 100% { opacity: .4; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.1); } }
+@keyframes pv-rise { 0%, 100% { transform: scaleY(.5); } 50% { transform: scaleY(1); } }
+@keyframes pv-twinkle { 0%, 100% { opacity: .2; transform: scale(.7) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+@keyframes pv-travel { 0% { transform: translateX(0); opacity: 0; } 12% { opacity: 1; } 86% { opacity: 1; } 100% { transform: translateX(180px); opacity: 0; } }
+@keyframes pv-pkt { 0% { transform: translate(0,0); opacity: 0; } 14% { opacity: 1; } 84% { opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+@keyframes pv-trace { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -1000; } }
+@keyframes pv-draw { to { stroke-dashoffset: 0; } }
+@keyframes pv-sweep { 0% { stroke-dashoffset: var(--c); } 55% { stroke-dashoffset: var(--c4); } 80% { stroke-dashoffset: var(--c4); } 100% { stroke-dashoffset: var(--c); } }
+@keyframes pv-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .pv * { animation: none !important; } }
