@@ -10,14 +10,14 @@ const ease = [0.16, 1, 0.3, 1];
 function Card({ p, showVisual }) {
   return (
     <article
-      className="relative flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 backdrop-blur-md"
+      className="group/card relative flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 backdrop-blur-md transition-all duration-500 ease-out hover:border-white/20 hover:shadow-[0_24px_70px_-28px_rgba(0,0,0,0.8)]"
       style={{
         background: p.feat
           ? "linear-gradient(135deg, rgba(214,188,130,0.08), rgba(127,216,208,0.05))"
           : "linear-gradient(160deg, rgba(255,255,255,0.035), rgba(255,255,255,0.006))",
       }}
     >
-      <span aria-hidden className="absolute left-0 top-0 z-10 h-0.5 w-full bg-gradient-to-r from-amber to-teal opacity-90" />
+      <span aria-hidden className="absolute left-0 top-0 z-10 h-0.5 w-full bg-gradient-to-r from-amber to-teal opacity-90 transition-opacity duration-500 group-hover/card:opacity-100" />
 
       {/* animated mini visual */}
       <div
@@ -48,31 +48,31 @@ function Card({ p, showVisual }) {
 
         <div className="mt-5 flex flex-wrap gap-2">
           {p.stack.map((s) => (
-            <span key={s} className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest2 text-bone/55">
+            <span key={s} className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest2 text-bone/55 transition-colors duration-300 hover:border-amber/40 hover:text-bone/80">
               {s}
             </span>
           ))}
         </div>
 
         {p.link && (
-          <div className="mt-6">
+          <div className="mt-7">
             <a
               href={p.link.href}
               target="_blank"
               rel="noreferrer noopener"
               data-cursor
               data-cursor-label="Open"
-              className={
+              className={`group/l inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-mono text-[11px] font-semibold uppercase tracking-widest2 transition-all duration-300 hover:-translate-y-0.5 ${
                 p.link.hot
-                  ? "group/l inline-flex items-center gap-2 rounded-full bg-amber px-5 py-2.5 font-mono text-[11px] font-semibold uppercase tracking-widest2 text-ink-900 transition-all duration-300 hover:bg-amber-soft"
-                  : "group/l inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest2 text-bone transition-colors duration-300 hover:text-amber"
-              }
+                  ? "bg-amber text-ink-900 shadow-[0_6px_24px_-8px_rgba(214,188,130,0.55)] hover:bg-amber-soft hover:shadow-[0_12px_34px_-8px_rgba(214,188,130,0.7)]"
+                  : "border border-amber/45 bg-amber/[0.07] text-amber hover:border-amber hover:bg-amber/15 hover:text-amber-soft"
+              }`}
             >
               {p.link.label}
               <ArrowUpRight
                 size={14}
                 strokeWidth={2.5}
-                className={`transition-transform duration-300 group-hover/l:translate-x-0.5 group-hover/l:-translate-y-0.5 ${p.link.hot ? "text-ink-900" : "text-amber"}`}
+                className={`transition-transform duration-300 group-hover/l:translate-x-0.5 group-hover/l:-translate-y-0.5 ${p.link.hot ? "text-ink-900" : "text-amber group-hover/l:text-amber-soft"}`}
               />
             </a>
           </div>
