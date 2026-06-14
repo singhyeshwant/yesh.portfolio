@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#060608" />
 
+    <!-- ============ Performance: start the 3D model + its Draco decoder ============
+         Fetch these in parallel with the JS bundle (instead of waiting until the
+         bundle has parsed and executed), so the figure appears as soon as possible.
+         Same-origin requests → no `crossorigin`. The "/yesh.portfolio/" prefix is the
+         Vite `base`; if you change `base` in vite.config.js, update these three too. -->
+    <link rel="preload" href="/yesh.portfolio/assets/model/torso.glb" as="fetch" type="model/gltf-binary" crossorigin="anonymous" />
+    <link rel="preload" href="/yesh.portfolio/draco/draco_wasm_wrapper.js" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/yesh.portfolio/draco/draco_decoder.wasm" as="fetch" type="application/wasm" crossorigin="anonymous" />
+
     <!-- ============ SEO ============ -->
     <title>Yeshwant Singh | AI Project Coordinator</title>
     <meta

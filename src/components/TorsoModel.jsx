@@ -6,6 +6,10 @@ import { MODEL } from "../lib/config";
 import { asset } from "../lib/asset";
 
 const MODEL_URL = asset(MODEL.url);
+// Self-hosted Draco decoder (in /public/draco) — the .glb geometry is
+// Draco-compressed, so the loader needs a decoder. Self-hosting avoids any
+// runtime CDN dependency; only ~246KB (wasm+glue) loads once, then it's cached.
+const DRACO_PATH = asset("draco/");
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 const smooth = (t) => {
@@ -61,7 +65,7 @@ function enterOf(id) {
  * temporary nudge that eases back to the scripted pose.
  */
 export default function TorsoModel({ entered, reduced, isMobile }) {
-  const { scene } = useGLTF(MODEL_URL);
+  const { scene } = useGLTF(MODEL_URL, DRACO_PATH);
   const group = useRef();
 
   useMemo(() => {
@@ -228,4 +232,4 @@ export default function TorsoModel({ entered, reduced, isMobile }) {
   );
 }
 
-useGLTF.preload(MODEL_URL);
+useGLTF.preload(MODEL_URL, DRACO_PATH);
